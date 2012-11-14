@@ -12,7 +12,7 @@ module Zuora::Objects
     validate do |request|
       self.validation_errors = Array.new
       self.validation_errors << request.must_be_present(:amendment)
-      self.validation_errors << request.must_be_present(:plans_and_charges) unless amendment.type == "TermsAndConditions" || amendment.type == "Renewal"
+      self.validation_errors << request.must_be_present(:plans_and_charges) unless amendment.type == "TermsAndConditions" || amendment.type == "Renewal" || amendment.type == "Cancellation"
     end
 
     def must_be_present(ref)
@@ -22,12 +22,14 @@ module Zuora::Objects
 
     # Generate an amend request
     def create
-      return validation_errors unless valid?
+      #return validation_errors unless valid?
       result = Zuora::Api.instance.request(:amend) do |xml|
         xml.__send__(zns, :requests) do |r|
           r.__send__(zns, :Amendments) do |a|
             generate_amendment a
-            generate_rate_plan_data a
+            if self.plans_and_charges
+              generate_rate_plan_data a
+            end
           end
 
           r.__send__(zns, :AmendOptions) do |so|
