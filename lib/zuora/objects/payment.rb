@@ -27,7 +27,7 @@ module Zuora::Objects
     #validates_length_of :soft_descriptor_phone, :maximum => 20, :allow_nil => true
     validates_inclusion_of :status, :in => %w(Canceled Draft Error Posted Processing Processed Voided)
     validates_date_of :submitted_on, :allow_nil => true
-    validates_inclusion_of :transferred_to_accouning, :allow_nil => true, :in => %w(Processing Yes Error Ignore)
+    validates_inclusion_of :transferred_to_accounting, :allow_nil => true, :in => %w(Processing Yes Error Ignore)
     validates_inclusion_of :type, :in => %w(External Electronic)
     validates_length_of :updated_by_id, :maximum => 32
     validates_datetime_of :updated_date
