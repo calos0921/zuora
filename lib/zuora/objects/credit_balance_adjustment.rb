@@ -16,5 +16,9 @@ module Zuora::Objects
     define_attributes do
       read_only :created_by_id, :created_date, :updated_by_id, :updated_date
     end
+
+    def valid?
+      return true
+    end
   end
 end
