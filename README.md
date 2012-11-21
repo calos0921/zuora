@@ -34,8 +34,6 @@ All additional requirements for development should be referenced in the provided
     Zuora::Objects::Account.find_by(:account_number => '12345')
     # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
 
-## Enhanced Method
-
     # Only query a column, eg. "account_number"
     Zuora::Objects::Account.where(:account_number => '12345', "account_number") 
     # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
@@ -44,9 +42,13 @@ All additional requirements for development should be referenced in the provided
     Zuora::Objects::Account.where(:account_number => '12345', "account_number, name") 
     # => <Zuora::Objects::Account :account_number => 12345, :name => "test", :id => 'abc123'>
 
-## Modules added over original gem
+## Added Module Support
 
-  * Credit balance & payment related objects and columns are developed and tested
+  * Credit balance adjustment
+  * Payment
+  * Invoice payment
+  * Subscription request => support price change
+  * Amendment => support cancellation
 
 ## Documentation
   You can generate up to date documentation with the provided a rake task.
