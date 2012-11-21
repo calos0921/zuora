@@ -31,22 +31,22 @@ All additional requirements for development should be referenced in the provided
 
 ## Added Methods
 
-   Zuora::Objects::Account.find_by(:account_number => '12345')
-   # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
+    Zuora::Objects::Account.find_by(:account_number => '12345')
+    # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
 
 ## Enhanced Method
 
-   # Only query a column, eg. "account_number"
-   Zuora::Objects::Account.where(:account_number => '12345', "account_number") 
-   # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
+    # Only query a column, eg. "account_number"
+    Zuora::Objects::Account.where(:account_number => '12345', "account_number") 
+    # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
 
-   # Query 2 columns
-   Zuora::Objects::Account.where(:account_number => '12345', "account_number, name") 
-   # => <Zuora::Objects::Account :account_number => 12345, :name => "test", :id => 'abc123'>
+    # Query 2 columns
+    Zuora::Objects::Account.where(:account_number => '12345', "account_number, name") 
+    # => <Zuora::Objects::Account :account_number => 12345, :name => "test", :id => 'abc123'>
 
 ## Modules added over original gem
 
-   credit_balance & payment related objects and columns are developed and tested
+  * Credit balance & payment related objects and columns are developed and tested
 
 ## Documentation
   You can generate up to date documentation with the provided a rake task.
