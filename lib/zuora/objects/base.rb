@@ -42,8 +42,8 @@ module Zuora::Objects
       generate(result.to_hash, :query_response)
     end
     # find a record by the id
-    def self.find(id)
-      where(:id => id).first
+    def self.find(id, attributes=nil)
+      where({:id => id},attributes).first
     end
 
     # reload the record from the remote source
@@ -82,16 +82,24 @@ module Zuora::Objects
       self.class.ons
     end
 
+    def self.find_by(where, query_attributes=nil)
+      self.where(where, query_attributes=nil).first
+    end
+
     # locate objects using a custom where clause, currently arel
     # is not supported as it requires an actual db connection to
     # generate the sql queries. This may be overcome in the future.
-    def self.where(where)
-      keys = (attributes - unselectable_attributes).map(&:to_s).map(&:zuora_camelize)
+    def self.where(where, query_attributes=nil)
+      if !query_attributes
+        keys = (attributes - unselectable_attributes).map(&:to_s).map(&:zuora_camelize).join(', ')
+      else
+        keys = query_attributes
+      end
       if where.is_a?(Hash)
         # FIXME: improper inject usage.
         where = where.inject([]){|t,v| t << "#{v[0].to_s.zuora_camelize} = '#{v[1]}'"}.sort.join(' and ')
       end
-      sql = "select #{keys.join(', ')} from #{remote_name} where #{where}"
+      sql = "select #{keys} from #{remote_name} where #{where}"
 
       result = self.connector.query(sql)
 
