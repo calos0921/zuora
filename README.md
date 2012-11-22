@@ -13,7 +13,7 @@ All additional requirements for development should be referenced in the provided
 
 ## Installation
 
-    git clone git@github.com:wildfireapp/zuora.git
+    git clone git@github.com:Josephu/zuora.git
 
 ## Getting Started
 
@@ -28,6 +28,28 @@ All additional requirements for development should be referenced in the provided
     # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
     account.destroy
     # => true
+
+## Added Methods
+
+    # Use find by to query with specific column
+    Zuora::Objects::Account.find_by(:account_number => '12345')
+    # => <Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>
+
+    # Only query a column, eg. "account_number"
+    Zuora::Objects::Account.where(:account_number => '12345', "account_number") 
+    # => [<Zuora::Objects::Account :account_number => 12345, :id => 'abc123'>]
+
+    # Query 2 columns
+    Zuora::Objects::Account.where(:account_number => '12345', "account_number, name") 
+    # => [<Zuora::Objects::Account :account_number => 12345, :name => "test", :id => 'abc123'>]
+
+## Added Module Support
+
+  * Credit balance adjustment
+  * Payment
+  * Invoice payment
+  * Subscription request => support price change
+  * Amendment => support cancellation
 
 ## Documentation
   You can generate up to date documentation with the provided a rake task.
