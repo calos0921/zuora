@@ -30,6 +30,7 @@ module Zuora::Objects
       read_only :accounting_code, :created_by_id, :created_date, :gateway_response,
         :gateway_response_code, :reference_id, :refund_number, :refund_transaction_time,
         :status, :updated_by_id, :updated_date
+        write_only :payment_id
     end
   end
 end

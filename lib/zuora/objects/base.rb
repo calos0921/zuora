@@ -144,6 +144,19 @@ module Zuora::Objects
       return result
     end
 
+    # create the record remotely with soap response (this is a hack)
+    def create_soap
+      result = self.connector.create
+      apply_soap_response(result.to_hash, :create_response)
+    end
+
+    def update_soap
+      result = self.connector.update
+      result = apply_soap_response(result.to_hash, :update_response)
+      reset_complex_object_cache
+      return result
+    end
+
     # destroy the remote object
     def destroy
       result = self.connector.destroy
@@ -195,6 +208,17 @@ module Zuora::Objects
         self.errors.add(:base, result[:errors][:message])
         return false
       end
+    end
+
+    # parse the response and apply returned id attribute or errors
+    def apply_soap_response(response_hash, type)
+      result = response_hash[type][:result]
+      if result[:success]
+        self.id = result[:id]
+        @previously_changed = changes
+        @changed_attributes.clear
+      end
+      return result
     end
 
   end
