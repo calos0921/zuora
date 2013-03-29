@@ -20,6 +20,7 @@ module Zuora::Objects
     validates_presence_of     :invoice_id, :if => Proc.new { |ia| ia.invoice_number.nil? }
     validates_presence_of     :invoice_number, :if => Proc.new { |ia| ia.invoice_id.nil? }
     validates_length_of       :reference_id, :maximum => 60, :allow_nil => true
+    validates_inclusion_of    :status, :in => %w(Canceled Processed), :allow_nil => true
     validates_inclusion_of    :transferred_to_accounting, :in => %w(Processing Yes Error Ignore), :allow_nil => true
     validates_inclusion_of    :type, :in => %w(Credit Charge)
     #validates_length_of       :updated_by_id, :maximum => 32, :allow_nil => true
@@ -33,8 +34,7 @@ module Zuora::Objects
         :created_date,
         :impact_amount,
         :updated_by_id,
-        :updated_date,
-        :status
+        :updated_date
       )
       defaults(
         :adjustment_date => Proc.new { Date.today }
