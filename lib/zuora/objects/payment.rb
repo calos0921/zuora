@@ -2,6 +2,7 @@ module Zuora::Objects
   class Payment < Base
     belongs_to :account
     belongs_to :invoice
+    has_one :payment_method
 
     validates_presence_of :account_id, :amount, :effective_date, :status, :type
 

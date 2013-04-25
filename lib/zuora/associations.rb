@@ -18,6 +18,18 @@ module Zuora::Associations
       end
     end
 
+    def has_one(klass_sym)
+      prefix = "Zuora::Objects::"
+      klass_name = prefix + klass_sym.to_s.classify
+
+      instance_eval do
+        define_method "#{klass_sym}" do
+          klass = klass_name.constantize
+          klass.where("Id = '#{self.send("#{klass_sym}_id")}'").try(:first)
+        end
+      end
+    end
+
     def belongs_to(*args)
       klass_sym = args.first.to_sym
       options = args.extract_options!
